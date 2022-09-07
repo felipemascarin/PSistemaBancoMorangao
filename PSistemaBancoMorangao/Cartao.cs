@@ -28,7 +28,7 @@ namespace PSistemaBancoMorangao
             NrCartao = nrCartao;
             CodVerificacao = codVerificacao;
             DataValidade = dataValidade;
-            Extrato = new List<string>(); //AINDA NÃO ESTÁ SALVANDO A LISTA DE EXTRATOS! TODA VEZ Q FECHA O PROGRAMA PERDE O EXTRATO.
+            Extrato = new List<string>();
         }
 
         public void GerarFatura()
