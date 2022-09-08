@@ -566,72 +566,98 @@ namespace PSistemaBancoMorangao
                                 case 1:
                                     string tipoconta = "";
                                     bool aprovada = false;
+                                    bool cpfjaexiste = false;
                                     //Pessoa física se cadastra:
                                     PF pf = new PF();
                                     pf = pf.CadastrarContaPF();
-                                    //Envia os dados de cadastro para escriturário inserir o tipo de conta:
-                                    tipoconta = escriturario.AtribuirTipoDeConta(pf);
-                                    //Retorna o tipo de conta e envia os dados para o gerente:
-                                    aprovada = gerente.AprovarConta(tipoconta, pf);
-                                    //Gerente retorna true para aprovada ou false para reprovada
 
-                                    if (aprovada)
+                                    //Procura por cpf ou rg já existente na base de dados do banco:
+                                    foreach (var conta in agencia.ListaContas)
                                     {
-                                        int idnovo;
-                                        string nrcartao, cvc, senha;
+                                        if (conta is CorrentePF correntepf)
+                                        {
+                                            if(correntepf.PessoaFisica.Cpf == pf.Cpf || correntepf.PessoaFisica.Rg == pf.Rg)
+                                            {
+                                                cpfjaexiste = true;
+                                            }
+                                        }
+                                    }
 
-                                        //Gera um valor de limite para conta corrente e cartão.
-                                        float limite = GerarLimite(tipoconta);
-
-                                        //Gera um número de cartão que não existe na base de dados do banco:
-                                        nrcartao = GerarNrCartao(agencia);
-
-                                        //Gera um cod de verificação CVC do cartão:
-                                        cvc = GerarCvc();
-
-                                        //Gera uma senha de 6 números para o cartão:
-                                        senha = GerarSenha();
-
-                                        //Cria o cartão:
-                                        Cartao cartao = new Cartao(false, true, 0, limite, senha, nrcartao, cvc, DateTime.Now.AddYears(5));
-
-                                        //gera um id que ainda não existe para a conta corrente:
-                                        idnovo = GerarIdContas(agencia);
-                                        //Gera uma senha de 6 números para a conta corrente:
-                                        senha = GerarSenha();
-
-                                        //Cria a conta corrente:
-                                        CorrentePF correntepf = new CorrentePF(agencia.IdAgencia, idnovo, senha, 0, limite, System.DateTime.Now, true, tipoconta, cartao, pf);
-
-                                        //gera um id que ainda não existe para a conta poupanca:
-                                        idnovo = GerarIdContas(agencia);
-                                        //Gera uma senha de 6 números para a conta Poupança:
-                                        senha = GerarSenha();
-
-                                        //Cria a conta poupança:
-                                        PoupancaPF poupancapf = new PoupancaPF(agencia.IdAgencia, idnovo, senha, 0, System.DateTime.Now, true, pf);
-
-                                        //Envia para agencia armazenar todos os dados das contas:
-                                        agencia.ListaContas.Add(correntepf);
-                                        agencia.ListaContas.Add(poupancapf);
-
-                                        //Informa que a conta foi criada:
+                                    //Se já existe uma conta com esse cpf ou rg a nova conta não é aberta e segue o processo:
+                                    if (cpfjaexiste == true)
+                                    {
                                         Console.Clear();
-                                        Console.ForegroundColor = ConsoleColor.Blue;
-                                        Console.WriteLine("Sua conta foi aprovada com sucesso!");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        Console.WriteLine(correntepf.ToString() + poupancapf.ToString());
+                                        Console.WriteLine("Essa conta não pode ser aberta, pois já existe esse cpf ou rg ");
                                         Console.WriteLine("\n\nPRESSIONE ENTER PARA VOLTAR!");
                                         Console.ReadKey();
                                     }
                                     else
                                     {
-                                        Console.Clear();
-                                        Console.ForegroundColor = ConsoleColor.Red;
-                                        Console.WriteLine("Conta não aprovada. Favor falar com gerente.");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        Console.WriteLine("\n\nPRESSIONE ENTER PARA VOLTAR!");
-                                        Console.ReadKey();
+
+                                        //Envia os dados de cadastro para escriturário inserir o tipo de conta:
+                                        tipoconta = escriturario.AtribuirTipoDeConta(pf);
+                                        //Retorna o tipo de conta e envia os dados para o gerente:
+                                        aprovada = gerente.AprovarConta(tipoconta, pf);
+                                        //Gerente retorna true para aprovada ou false para reprovada
+
+                                        if (aprovada)
+                                        {
+                                            int idnovo;
+                                            string nrcartao, cvc, senha;
+
+                                            //Gera um valor de limite para conta corrente e cartão.
+                                            float limite = GerarLimite(tipoconta);
+
+                                            //Gera um número de cartão que não existe na base de dados do banco:
+                                            nrcartao = GerarNrCartao(agencia);
+
+                                            //Gera um cod de verificação CVC do cartão:
+                                            cvc = GerarCvc();
+
+                                            //Gera uma senha de 6 números para o cartão:
+                                            senha = GerarSenha();
+
+                                            //Cria o cartão:
+                                            Cartao cartao = new Cartao(false, true, 0, limite, senha, nrcartao, cvc, DateTime.Now.AddYears(5));
+
+                                            //gera um id que ainda não existe para a conta corrente:
+                                            idnovo = GerarIdContas(agencia);
+                                            //Gera uma senha de 6 números para a conta corrente:
+                                            senha = GerarSenha();
+
+                                            //Cria a conta corrente:
+                                            CorrentePF correntepf = new CorrentePF(agencia.IdAgencia, idnovo, senha, 0, limite, System.DateTime.Now, true, tipoconta, cartao, pf);
+
+                                            //gera um id que ainda não existe para a conta poupanca:
+                                            idnovo = GerarIdContas(agencia);
+                                            //Gera uma senha de 6 números para a conta Poupança:
+                                            senha = GerarSenha();
+
+                                            //Cria a conta poupança:
+                                            PoupancaPF poupancapf = new PoupancaPF(agencia.IdAgencia, idnovo, senha, 0, System.DateTime.Now, true, pf);
+
+                                            //Envia para agencia armazenar todos os dados das contas:
+                                            agencia.ListaContas.Add(correntepf);
+                                            agencia.ListaContas.Add(poupancapf);
+
+                                            //Informa que a conta foi criada:
+                                            Console.Clear();
+                                            Console.ForegroundColor = ConsoleColor.Blue;
+                                            Console.WriteLine("Sua conta foi aprovada com sucesso!");
+                                            Console.ForegroundColor = ConsoleColor.White;
+                                            Console.WriteLine(correntepf.ToString() + poupancapf.ToString());
+                                            Console.WriteLine("\n\nPRESSIONE ENTER PARA VOLTAR!");
+                                            Console.ReadKey();
+                                        }
+                                        else
+                                        {
+                                            Console.Clear();
+                                            Console.ForegroundColor = ConsoleColor.Red;
+                                            Console.WriteLine("Conta não aprovada. Favor falar com gerente.");
+                                            Console.ForegroundColor = ConsoleColor.White;
+                                            Console.WriteLine("\n\nPRESSIONE ENTER PARA VOLTAR!");
+                                            Console.ReadKey();
+                                        }
                                     }
                                     break;
 
@@ -644,72 +670,98 @@ namespace PSistemaBancoMorangao
 
 
                                 case 2:
+
                                     //Pessoa jurídica se cadastra:
+                                    bool cnpjjaexiste = false;
                                     PJ pj = new PJ();
                                     pj = pj.CadastrarContaPJ();
-                                    //Envia os dados de cadastro para escriturário inserir o tipo de conta:
-                                    tipoconta = "EMPRESARIAL";
-                                    //Retorna o tipo de conta e envia os dados para o gerente:
-                                    aprovada = gerente.AprovarConta(tipoconta, pj);
-                                    //Gerente retorna true para aprovada ou false para reprovada
 
-                                    if (aprovada)
+                                    //Procura por cnpj já existente na base de dados do banco:
+                                    foreach (var conta in agencia.ListaContas)
                                     {
-                                        int idnovo;
-                                        string nrcartao, cvc, senha;
+                                        if (conta is CorrentePJ correntepj)
+                                        {
+                                            if (correntepj.PessoaJuridica.CNPJ == pj.CNPJ)
+                                            {
+                                                cnpjjaexiste = true;
+                                            }
+                                        }
+                                    }
 
-                                        //Gera um valor de limite para conta corrente e cartão.
-                                        float limite = GerarLimite(tipoconta);
-
-                                        //Gera um número de cartão que não existe na base de dados do banco:
-                                        nrcartao = GerarNrCartao(agencia);
-
-                                        //Gera um cod de verificação CVC do cartão:
-                                        cvc = GerarCvc();
-
-                                        //Gera uma senha de 6 números para o cartão:
-                                        senha = GerarSenha();
-
-                                        //Cria o cartão:
-                                        Cartao cartao = new Cartao(false, true, 0, limite, senha, nrcartao, cvc, DateTime.Now.AddYears(5));
-
-                                        //gera um id que ainda não existe para a conta corrente:
-                                        idnovo = GerarIdContas(agencia);
-                                        //Gera uma senha de 6 números para a conta corrente:
-                                        senha = GerarSenha();
-
-                                        //Cria a conta corrente:
-                                        CorrentePJ correntepj = new CorrentePJ(agencia.IdAgencia, idnovo, senha, 0, limite, System.DateTime.Now, true, tipoconta, cartao, pj);
-
-                                        //gera um id que ainda não existe para a conta poupanca:
-                                        idnovo = GerarIdContas(agencia);
-                                        //Gera uma senha de 6 números para a conta Poupança:
-                                        senha = GerarSenha();
-
-                                        //Cria a conta poupança:
-                                        PoupancaPJ poupancapj = new PoupancaPJ(agencia.IdAgencia, idnovo, senha, 0, System.DateTime.Now, true, pj);
-
-                                        //Envia para agencia armazenar todos os dados das contas:
-                                        agencia.ListaContas.Add(correntepj);
-                                        agencia.ListaContas.Add(poupancapj);
-
-                                        //Informa que a conta foi criada:
+                                    //Se já existe uma conta com esse cpf ou rg a nova conta não é aberta e segue o processo:
+                                    if (cnpjjaexiste == true)
+                                    {
                                         Console.Clear();
-                                        Console.ForegroundColor = ConsoleColor.Blue;
-                                        Console.WriteLine("A conta da empresa foi aprovada com sucesso!");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        Console.WriteLine(correntepj.ToString() + poupancapj.ToString());
+                                        Console.WriteLine("Essa conta não pode ser aberta, pois já existe uma conta com esse CNPJ ");
                                         Console.WriteLine("\n\nPRESSIONE ENTER PARA VOLTAR!");
                                         Console.ReadKey();
                                     }
                                     else
                                     {
-                                        Console.Clear();
-                                        Console.ForegroundColor = ConsoleColor.Red;
-                                        Console.WriteLine("Conta empresarial não aprovada. Favor falar com gerente.");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        Console.WriteLine("\n\nPRESSIONE ENTER PARA VOLTAR!");
-                                        Console.ReadKey();
+                                        //Envia os dados de cadastro para escriturário inserir o tipo de conta:
+                                        tipoconta = "EMPRESARIAL";
+                                        //Retorna o tipo de conta e envia os dados para o gerente:
+                                        aprovada = gerente.AprovarConta(tipoconta, pj);
+                                        //Gerente retorna true para aprovada ou false para reprovada
+
+                                        if (aprovada)
+                                        {
+                                            int idnovo;
+                                            string nrcartao, cvc, senha;
+
+                                            //Gera um valor de limite para conta corrente e cartão.
+                                            float limite = GerarLimite(tipoconta);
+
+                                            //Gera um número de cartão que não existe na base de dados do banco:
+                                            nrcartao = GerarNrCartao(agencia);
+
+                                            //Gera um cod de verificação CVC do cartão:
+                                            cvc = GerarCvc();
+
+                                            //Gera uma senha de 6 números para o cartão:
+                                            senha = GerarSenha();
+
+                                            //Cria o cartão:
+                                            Cartao cartao = new Cartao(false, true, 0, limite, senha, nrcartao, cvc, DateTime.Now.AddYears(5));
+
+                                            //gera um id que ainda não existe para a conta corrente:
+                                            idnovo = GerarIdContas(agencia);
+                                            //Gera uma senha de 6 números para a conta corrente:
+                                            senha = GerarSenha();
+
+                                            //Cria a conta corrente:
+                                            CorrentePJ correntepj = new CorrentePJ(agencia.IdAgencia, idnovo, senha, 0, limite, System.DateTime.Now, true, tipoconta, cartao, pj);
+
+                                            //gera um id que ainda não existe para a conta poupanca:
+                                            idnovo = GerarIdContas(agencia);
+                                            //Gera uma senha de 6 números para a conta Poupança:
+                                            senha = GerarSenha();
+
+                                            //Cria a conta poupança:
+                                            PoupancaPJ poupancapj = new PoupancaPJ(agencia.IdAgencia, idnovo, senha, 0, System.DateTime.Now, true, pj);
+
+                                            //Envia para agencia armazenar todos os dados das contas:
+                                            agencia.ListaContas.Add(correntepj);
+                                            agencia.ListaContas.Add(poupancapj);
+
+                                            //Informa que a conta foi criada:
+                                            Console.Clear();
+                                            Console.ForegroundColor = ConsoleColor.Blue;
+                                            Console.WriteLine("A conta da empresa foi aprovada com sucesso!");
+                                            Console.ForegroundColor = ConsoleColor.White;
+                                            Console.WriteLine(correntepj.ToString() + poupancapj.ToString());
+                                            Console.WriteLine("\n\nPRESSIONE ENTER PARA VOLTAR!");
+                                            Console.ReadKey();
+                                        }
+                                        else
+                                        {
+                                            Console.Clear();
+                                            Console.ForegroundColor = ConsoleColor.Red;
+                                            Console.WriteLine("Conta empresarial não aprovada. Favor falar com gerente.");
+                                            Console.ForegroundColor = ConsoleColor.White;
+                                            Console.WriteLine("\n\nPRESSIONE ENTER PARA VOLTAR!");
+                                            Console.ReadKey();
+                                        }
                                     }
                                     break;
 
