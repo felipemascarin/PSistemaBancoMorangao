@@ -15,13 +15,10 @@ namespace PSistemaBancoMorangao
 
         public override string ToString()
         {
-            string rg;
-            if (Rg.ToString().Length == 8)
-                rg = Rg + "-X";
-            else rg = Rg;
+            
 
             return "\nDADOS PESSOAIS: \nNome: " + Nome + "\nData de nascimento: " +
-                DataNasc_Registro.ToShortDateString() + "\nCPF: " + Convert.ToUInt64(Cpf).ToString(@"000\.000\.000\-00") + "\nRG: " + Convert.ToUInt64(rg).ToString(@"00\.000\.000\-0") + Endereco.ToString();
+                DataNasc_Registro.ToShortDateString() + "\nCPF: " + Convert.ToUInt64(Cpf).ToString(@"000\.000\.000\-00") + "\nRG: " + Convert.ToUInt64(Rg).ToString(@"00\.000\.000\-0") + Endereco.ToString();
         }
 
         public string ObterDados()
@@ -34,12 +31,14 @@ namespace PSistemaBancoMorangao
             //TRATAR DADOS: EX não pode faturamento menor que 0
             Console.WriteLine("CADASTRO DE CONTA CORRENTE / POUPANÇA DE PESSOA FÍSICA");
 
-
+            string[] vetorletras = new string[] {"F","Ç","ç","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S",
+            "T","U","V","W","X","Y","Z","Á","É","Í","Ó","Ú","À","È","Ì","Ò","Ù","Â","Ê","Î","Ô","Û","Ã","Õ"," "};
+            string[] vetornumeros = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
             string nome = "";
             DateTime datanasc = DateTime.Parse("01/01/0001");
             float faturamentomensal = 0;
-            long cpf = 0;
-            int rg = 0;
+            string cpf = "";
+            string rg = "";
             string cidade = "";
             string rua = "";
             string bairro = "";
@@ -47,28 +46,48 @@ namespace PSistemaBancoMorangao
             int cep = 0;
             string estado = "";
             bool validado = false;
+            bool encontrado;
+
 
             do
             {
+                encontrado = true;
+                Console.Write("Nome: ");
                 try
                 {
-                    Console.Write("Nome: ");
                     nome = Console.ReadLine();
-                    validado = true;
+
+                    char[] letras = nome.ToCharArray();
+
+
+                    for (int i = 0; i < letras.Length && encontrado != false; i++)
+                    {
+                        foreach (var v in vetorletras)
+                        {
+                            if (letras[i].ToString().ToUpper().Equals(v))
+                            {
+                                encontrado = true;
+                                break;
+                            }
+                            else encontrado = false;
+                        }
+                    }
+
+                    if (encontrado == false) Console.WriteLine("Nome só aceita letras.");
                 }
                 catch (Exception)
                 {
                     Console.WriteLine("Insira um valor válido!");
-                    validado = false;
+                    encontrado = false;
                 }
-            } while (validado == false);
+            } while (encontrado == false);
 
 
             do
             {
                 try
                 {
-                    Console.Write("Data de Nascimento (xx/MM/yyyy): ");
+                    Console.Write("Data de Nascimento: ");
                     datanasc = DateTime.Parse(Console.ReadLine());
                     validado = true;
                 }
@@ -106,112 +125,186 @@ namespace PSistemaBancoMorangao
 
             do
             {
-                Console.Write("CPF: ");
+                encontrado = true;
+                Console.Write("Cpf: ");
                 try
                 {
-                    cpf = long.Parse(Console.ReadLine());
-                    if (cpf < 0)
+                    cpf = Console.ReadLine();
+
+                    char[] letras = cpf.ToCharArray();
+
+                    if (letras.Length == 11)
                     {
-                        Console.WriteLine("Insira um valor válido positivo!");
-                        validado = false;
-                    }
-                    else
-                    {
-                        if (cpf.ToString().Length != 11)
+                        for (int i = 0; i < letras.Length && encontrado != false; i++)
                         {
-                            Console.WriteLine("Insira obrigatóriamente os 11 números para prosseguir!");
-                            validado = false;
+                            foreach (var v in vetornumeros)
+                            {
+                                if (letras[i].ToString().ToUpper().Equals(v))
+                                {
+                                    encontrado = true;
+                                    break;
+                                }
+                                else encontrado = false;
+                            }
                         }
-                        else
-                            validado = true;
                     }
+                    else 
+                    {
+                        Console.WriteLine("Só aceita números válidos de 11 digitos");
+                        encontrado = false;
+                    } 
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Insira um valor válido! Apenas os números");
-                    validado = false;
+                    Console.WriteLine("Insira um valor válido!");
+                    encontrado = false;
                 }
-            } while (validado == false);
+            } while (encontrado == false);
 
 
 
             do
             {
+                encontrado = true;
                 Console.Write("RG: ");
                 try
                 {
-                    rg = int.Parse(Console.ReadLine());
-                    if (rg < 0)
+                    rg = Console.ReadLine();
+
+                    char[] letras = rg.ToCharArray();
+
+                    if (letras.Length == 9)
                     {
-                        Console.WriteLine("Insira um valor válido positivo!");
-                        validado = false;
+                        for (int i = 0; i < letras.Length && encontrado != false; i++)
+                        {
+                            foreach (var v in vetornumeros)
+                            {
+                                if (letras[i].ToString().ToUpper().Equals(v))
+                                {
+                                    encontrado = true;
+                                    break;
+                                }
+                                else encontrado = false;
+                            }
+                        }
                     }
                     else
                     {
-                        if (rg.ToString().Length < 8 || rg.ToString().Length > 9)
-                        {
-                            Console.WriteLine("Insira obrigatóriamente 8 ou 9 números para prosseguir! Não insira o último digito se ele for X");
-                            validado = false;
-                        }
-                        else
-                            validado = true;
+                        Console.WriteLine("Só aceita 9 digitos, se for digito X digite 0 no lugar");
+                        encontrado = false;
                     }
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Insira obrigatóriamente 8 ou 9 números para prosseguir! Não insira o último digito se ele for X");
-                    validado = false;
+                    Console.WriteLine("Insira um valor válido!");
+                    encontrado = false;
                 }
-            } while (validado == false);
+            } while (encontrado == false);
 
+
+            Console.Write("\nEndereço:\n\n");
 
 
             do
             {
+                encontrado = true;
                 Console.Write("Cidade: ");
                 try
                 {
                     cidade = Console.ReadLine();
-                    validado = true;
+
+                    char[] letras = cidade.ToCharArray();
+
+
+                    for (int i = 0; i < letras.Length && encontrado != false; i++)
+                    {
+                        foreach (var v in vetorletras)
+                        {
+                            if (letras[i].ToString().ToUpper().Equals(v))
+                            {
+                                encontrado = true;
+                                break;
+                            }
+                            else encontrado = false;
+                        }
+                    }
+
+                    if (encontrado == false) Console.WriteLine("Nome só aceita letras.");
                 }
                 catch (Exception)
                 {
                     Console.WriteLine("Insira um valor válido!");
-                    validado = false;
+                    encontrado = false;
                 }
-            } while (validado == false);
+            } while (encontrado == false);
 
 
             do
             {
+                encontrado = true;
                 Console.Write("Rua: ");
                 try
                 {
                     rua = Console.ReadLine();
-                    validado = true;
+
+                    char[] letras = rua.ToCharArray();
+
+
+                    for (int i = 0; i < letras.Length && encontrado != false; i++)
+                    {
+                        foreach (var v in vetorletras)
+                        {
+                            if (letras[i].ToString().ToUpper().Equals(v))
+                            {
+                                encontrado = true;
+                                break;
+                            }
+                            else encontrado = false;
+                        }
+                    }
+
+                    if (encontrado == false) Console.WriteLine("Nome só aceita letras.");
                 }
                 catch (Exception)
                 {
                     Console.WriteLine("Insira um valor válido!");
-                    validado = false;
+                    encontrado = false;
                 }
-            } while (validado == false);
+            } while (encontrado == false);
 
 
             do
             {
+                encontrado = true;
                 Console.Write("Bairro: ");
                 try
                 {
                     bairro = Console.ReadLine();
-                    validado = true;
+
+                    char[] letras = bairro.ToCharArray();
+
+
+                    for (int i = 0; i < letras.Length && encontrado != false; i++)
+                    {
+                        foreach (var v in vetorletras)
+                        {
+                            if (letras[i].ToString().ToUpper().Equals(v))
+                            {
+                                encontrado = true;
+                                break;
+                            }
+                            else encontrado = false;
+                        }
+                    }
+
+                    if (encontrado == false) Console.WriteLine("Nome só aceita letras.");
                 }
                 catch (Exception)
                 {
                     Console.WriteLine("Insira um valor válido!");
-                    validado = false;
+                    encontrado = false;
                 }
-            } while (validado == false);
+            } while (encontrado == false);
 
 
             do
@@ -260,6 +353,7 @@ namespace PSistemaBancoMorangao
                         if (cep.ToString().Length != 8)
                         {
                             Console.WriteLine("Insira um valor válido! Apenas 8 números!");
+                            validado = false;
                         }
                         else
                             validado = true;
@@ -273,30 +367,46 @@ namespace PSistemaBancoMorangao
             } while (validado == false);
 
 
+
             do
             {
+                encontrado = true;
                 Console.Write("Estado: ");
                 try
                 {
                     estado = Console.ReadLine();
-                    validado = true;
+
+                    char[] letras = estado.ToCharArray();
+
+
+                    for (int i = 0; i < letras.Length && encontrado != false; i++)
+                    {
+                        foreach (var v in vetorletras)
+                        {
+                            if (letras[i].ToString().ToUpper().Equals(v))
+                            {
+                                encontrado = true;
+                                break;
+                            }
+                            else encontrado = false;
+                        }
+                    }
+
+                    if (encontrado == false) Console.WriteLine("Nome só aceita letras.");
                 }
                 catch (Exception)
                 {
                     Console.WriteLine("Insira um valor válido!");
-                    validado = false;
+                    encontrado = false;
                 }
-            } while (validado == false);
+            } while (encontrado == false);
 
 
             Endereco endereco = new Endereco(cidade, rua, bairro, numero.ToString(), cep.ToString(), estado);
-            PF pessoafisica = new PF(endereco, nome, datanasc, faturamentomensal, cpf.ToString(), rg.ToString());
+            PF pessoafisica = new PF(endereco, nome, datanasc, faturamentomensal, cpf, rg);
 
             return pessoafisica;
 
         }
-
-
-
     }
 }

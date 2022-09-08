@@ -27,25 +27,6 @@ namespace PSistemaBancoMorangao
             return op;
         }
 
-        //Ler um valor string válido:
-        static public string TryCatchstring()
-        {
-            string op = " ";
-            do
-            {
-                try
-                {
-                    op = Console.ReadLine();
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Digite uma opção válida!");
-                    op = " ";
-                }
-            } while (op == " ");
-            return op;
-        }
-
         //Gravar dados da agência em arquivo txt:
         static public void GravarAgencia(Agencia agencia)
         {
@@ -576,7 +557,7 @@ namespace PSistemaBancoMorangao
                                     {
                                         if (conta is CorrentePF correntepf)
                                         {
-                                            if(correntepf.PessoaFisica.Cpf == pf.Cpf || correntepf.PessoaFisica.Rg == pf.Rg)
+                                            if (correntepf.PessoaFisica.Cpf == pf.Cpf || correntepf.PessoaFisica.Rg == pf.Rg)
                                             {
                                                 cpfjaexiste = true;
                                             }
@@ -660,13 +641,6 @@ namespace PSistemaBancoMorangao
                                         }
                                     }
                                     break;
-
-
-
-
-                                //_____________________________________________________________________________________________________________________
-
-
 
 
                                 case 2:
