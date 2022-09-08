@@ -1,5 +1,5 @@
 # PSistemaBancoMorangao
-<Trabalho do branco morangão, proposto em aula.
+size="+2"<Trabalho do branco morangão, proposto em aula.
 
  <b><i>Sistema de gerenciamento de um banco fictício, exercício proposto em aula.</i></b>
 
