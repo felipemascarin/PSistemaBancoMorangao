@@ -35,8 +35,8 @@ A conta que recebe a transferência recebe o valor depositado e recebe também a
 Desenvolver um diagrama de classes em um grupo de 3 pessoas baseado nos requisitos do enunciado;
 Não desenvolver nada de código até o grupo entrar em consenso sobre o diagrama;
 Entregar o diagrama de classes no prazo estipulado;
-Não pode alterar o diagrama de classes depois de entregue, se for preciso alterar deve ser em consentimento do grupo;
-O código deverá ser realizado individualmente e sendo fiel ao diagrama de classes entregue.
+Não pode alterar o diagrama de classes depois de entregue;
+O código deverá ser realizado individualmente e sendo fiel ao diagrama de classes.
 
 
 
@@ -44,9 +44,9 @@ O código deverá ser realizado individualmente e sendo fiel ao diagrama de clas
 
 
 
-Esse trabalho serviu muito para treinar e praticar os conhecimentos adquiridos; Para seu desenvolvimento foi preciso estudar alguns conceitos novos;
+Esse trabalho serviu muito para treinar e praticar os conhecimentos adquiridos;
+Para seu desenvolvimento foi preciso estudar alguns conceitos novos;
 O código realiza as mesmas coisas as vezes de formas diferentes, para aplicação da diversidade de conhecimentos;
-Não houve manifestação de algum integrante do grupo durante o desenvolvimento do código sobre alterações no diagrama de classes depois de entregue;
 A construção do programa e o conceito de orientação a objeto do código segue fiel ao diagrama de classes entregue;
 Não foi utilizado banco de dados, os dados são armazenados em arquivos txt em destinatário específico do sistema operacional;
 Não era permitido utilizar classes abstratas e nem interfaces;
