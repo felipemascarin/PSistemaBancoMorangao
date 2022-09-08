@@ -1,13 +1,13 @@
 # PSistemaBancoMorangao
 <Trabalho do branco morangão, proposto em aula.
 
- <b> Sistema de gerenciamento de um banco fictício, exercício proposto em aula. </b>
+ <b><i>Sistema de gerenciamento de um banco fictício, exercício proposto em aula.</i></b>
 
 
 
 
 
- <b> Pré-requisitos para operação desse programa: </b>
+ <b><i> Pré-requisitos para operação desse programa: </i></b>
 
 
 
@@ -38,7 +38,7 @@ A conta que recebe a transferência recebe o valor depositado e recebe também a
 
 
 
- <b> O sistema do banco morangão foi um trabalho proposto em aula, onde foi estipulado os seguintes passos:  </b>
+ <b><i>O sistema do banco morangão foi um trabalho proposto em aula, onde foi estipulado os seguintes passos:</i></b>
 
 
 
@@ -54,7 +54,7 @@ O código deverá ser realizado individualmente e sendo fiel ao diagrama de clas
 
 
 
- <b> Considerações sobre o desenvolvimento: </b>
+ <b><i>Considerações sobre o desenvolvimento:</i></b>
 
 
 
@@ -82,7 +82,7 @@ Além de várias estruturas condicionais a mais, essa lista genérica de classe 
 
 
 
- <b> Enunciado do trabalho proposto em aula:  </b>
+ <b><i>Enunciado do trabalho proposto em aula:</i></b>
 
 
 
