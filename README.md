@@ -1,5 +1,5 @@
 # PSistemaBancoMorangao
-<font color="Blue"><Trabalho do branco morangão, proposto em aula.</font>
+<font size="1">Trabalho do branco morangão, proposto em aula.</font>
 
  <b><i>Sistema de gerenciamento de um banco fictício, exercício proposto em aula.</i></b>
 
