@@ -134,6 +134,7 @@ namespace PSistemaBancoMorangao
             } while (validado == false);
 
 
+
             do
             {
                 Console.Write("RG: ");
