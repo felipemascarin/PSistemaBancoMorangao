@@ -31,7 +31,7 @@ namespace PSistemaBancoMorangao
             //TRATAR DADOS: EX não pode faturamento menor que 0
             Console.WriteLine("CADASTRO DE CONTA CORRENTE / POUPANÇA DE PESSOA FÍSICA");
 
-            string[] vetorletras = new string[] {"F","Ç","ç","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S",
+            string[] vetorletras = new string[] {"Ç","ç","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S",
             "T","U","V","W","X","Y","Z","Á","É","Í","Ó","Ú","À","È","Ì","Ò","Ù","Â","Ê","Î","Ô","Û","Ã","Õ"," "};
             string[] vetornumeros = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
             string nome = "";
@@ -130,7 +130,7 @@ namespace PSistemaBancoMorangao
                 try
                 {
                     cpf = Console.ReadLine();
-
+                    
                     char[] letras = cpf.ToCharArray();
 
                     if (letras.Length == 11)

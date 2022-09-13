@@ -55,7 +55,7 @@ namespace PSistemaBancoMorangao
                 StreamWriter s3 = new StreamWriter("c:\\BancoMorangao\\ContasCorrentesPJ.txt");
                 StreamWriter s4 = new StreamWriter("c:\\BancoMorangao\\ContasPoupancasPJ.txt");
                 StreamWriter s5 = new StreamWriter("c:\\BancoMorangao\\ExtratosContas.txt");
-                StreamWriter s6 = new StreamWriter("c:\\BancoMorangao\\ExtratosCartoesPF.txt");
+                StreamWriter s6 = new StreamWriter("c:\\BancoMorangao\\ExtratosCartoesPFtxt");
                 StreamWriter s7 = new StreamWriter("c:\\BancoMorangao\\ExtratosCartoesPJ.txt");
 
                 foreach (var conta in agencia.ListaContas)
@@ -1131,9 +1131,8 @@ namespace PSistemaBancoMorangao
 
         static void Main(string[] args)
         {
-
-            //Deve ser criado uma pasta de nome BancoMorangao dentro de c: para que o programa possa gravar os arquivos txt.
-
+            //Cria um diretório para o salvamento dos arquivos.
+            System.IO.Directory.CreateDirectory(@"C:\BancoMorangao");
 
             //Carrega dados da agência e conta salvos nos arquivos txt quando o programa é iniciado:
             Agencia agencia = CarregarAgencia();
