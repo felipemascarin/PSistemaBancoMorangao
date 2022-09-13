@@ -13,7 +13,6 @@ Trabalho do branco morangão, proposto em aula.
 
 Sempre que o programa é encerrado, todos os dados das contas são salvos em arquivos txt no destinatário c:\BancoMorangao; 
 Sempre que o programa é executado, todos os dados das contas são lidos dos arquivos txt e carregado para dentro do programa; 
-É preciso criar uma pasta com o nome BancoMorangao dentro de C: para que o programa salve os dados quando finalizado; 
 No Menu do cliente é possível solicitar abertura e fechamento de contas PF e PJ;
 É possível acessar as operações da sua conta inserindo id e senha no menu do caixa eletrônico;
 No menu do gerente, quando inserida a senha de acesso "123456" é possível filtrar todas as informações das contas existentes por cpf e cnpj, bom também se caso esquecer a senha;
