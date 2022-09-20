@@ -43,7 +43,7 @@ O código deverá ser realizado individualmente e sendo fiel ao diagrama de clas
 
 
 
-Esse trabalho serviu muito para treinar e praticar os conhecimentos adquiridos;
+Esse trabalho serviu muito para praticar os conhecimentos adquiridos;
 Para seu desenvolvimento foi preciso estudar alguns conceitos novos;
 O código realiza as mesmas coisas as vezes de formas diferentes, para aplicação da diversidade de conhecimentos;
 A construção do programa e o conceito de orientação a objeto do código segue fiel ao diagrama de classes entregue;
